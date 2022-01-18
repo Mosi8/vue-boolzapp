@@ -1,6 +1,7 @@
 let app = new Vue ({
     el : '#app',
     data : {
+        chatVisualizzata : 0,
         contacts : [
             {
                 name : 'Michele',
@@ -88,7 +89,15 @@ let app = new Vue ({
         ]
     },
     methods : {
-
+        mostraChat : function (indice) {
+            if(indice == this.chatVisualizzata){
+                return 'active'
+            }
+            return 'hidden'
+        },
+        selezionata : function (indice){
+            this.chatVisualizzata = indice;
+        }
     },
 }
 );
