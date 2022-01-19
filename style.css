@@ -90,4 +90,25 @@ img {
     height: calc(100% - 70px);
     position: relative;
     top: 70px;
+    padding: 10px;
+}
+
+.ricevuto {
+    padding: 5px 8px;
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: #fff;
+    min-width: 200px;
+    max-width: 600px;
+    margin: 0 20px 10px 20px;
+}
+
+.inviato {
+    padding: 5px 8px;
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: rgb(225, 247, 203);
+    min-width: 200px; 
+    max-width: 600px;
+    margin: 0 20px 10px 20px;
 }

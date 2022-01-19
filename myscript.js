@@ -1,7 +1,7 @@
 let app = new Vue ({
     el : '#app',
     data : {
-        chatVisualizzata : 0,
+        chatVisualizzata : null,
         contacts : [
             {
                 name : 'Michele',
@@ -97,7 +97,20 @@ let app = new Vue ({
         },
         selezionata : function (indice){
             this.chatVisualizzata = indice;
-        }
+            console.log(dayjs().format('DD/MM/YYYY HH:mm:ss'))
+        },
+        tipoMessaggio : function (indice, windex) {
+            if(this.contacts[indice].messages[windex].status == 'received'){
+                return 'ricevuto'
+            }
+            return 'inviato'
+        },
+        colonnaMessaggio : function (indice, windex) {
+            if(this.contacts[indice].messages[windex].status == 'received'){
+                return 'd-flex justify-content-start'
+            }
+            return 'd-flex justify-content-end'
+        },
     },
 }
 );
