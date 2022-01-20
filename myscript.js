@@ -1,11 +1,16 @@
 let app = new Vue ({
     el : '#app',
     data : {
-        chatVisualizzata : null,
+        userName : {
+            name : 'Maurizio',
+            avatar : 'io'
+        },
+        nuovoMessaggio : "",
+        chatVisualizzata : 0,
         contacts : [
             {
                 name : 'Michele',
-                avatar : '_1',
+                avatar : 'img/avatar_1.png',
                 visible : true,
                 messages : [
                     {
@@ -27,7 +32,7 @@ let app = new Vue ({
             },
             {
                 name : 'Fabio',
-                avatar : '_2',
+                avatar : 'img/avatar_2.png',
                 visible : true,
                 messages : [
                     {
@@ -49,7 +54,7 @@ let app = new Vue ({
             },
             {
                 name : 'Samuele',
-                avatar : '_3',
+                avatar : 'img/avatar_3.png',
                 visible : true,
                 messages : [
                     {
@@ -71,7 +76,7 @@ let app = new Vue ({
             },
             {
                 name : 'Luisa',
-                avatar : '_4',
+                avatar : 'img/avatar_4.png',
                 visible : true,
                 messages : [
                     {
@@ -97,7 +102,6 @@ let app = new Vue ({
         },
         selezionata : function (indice){
             this.chatVisualizzata = indice;
-            console.log(dayjs().format('DD/MM/YYYY HH:mm:ss'))
         },
         tipoMessaggio : function (indice, windex) {
             if(this.contacts[indice].messages[windex].status == 'received'){
@@ -110,6 +114,41 @@ let app = new Vue ({
                 return 'd-flex justify-content-start'
             }
             return 'd-flex justify-content-end'
+        },
+        chiudiChat : function () {
+            this.chatVisualizzata = null;
+        },
+        // infoChat : function () {
+        //     let info = document.querySelectorAll('dettagliChat')
+        //     if(info.className = 'dettagliChat hidden'){
+        //         return info.className ='dettagliChat active'
+        //     }
+        //     return info.className ='dettagliChat hidden'
+        // },
+        newMessage : function (indice) {
+            let newMess = {
+                date : dayjs().format("HH:mm"),
+                text : this.nuovoMessaggio,
+                status : 'sent'
+            }; 
+            if(this.nuovoMessaggio != ""){
+                this.contacts[indice].messages.push(newMess);
+            }
+            this.nuovoMessaggio = "";
+            setTimeout(() => {
+                this.contacts[indice].messages.push(
+                    {
+                        date : dayjs().format("HH:mm"),
+                        text : 'Ok',
+                        status : 'received'
+                    }
+                )
+            }, 2000);
+            setTimeout(() => {
+                let attesa = document.querySelectorAll('messaggi_lista_attesa');
+                attesa.classList.remove('hidden');
+            }, 2000);
+
         },
     },
 }

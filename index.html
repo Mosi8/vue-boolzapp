@@ -7,42 +7,72 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <title>Document</title>
+        <title>Boolzapp</title>
     </head>
     <body>
         <div id="app">
+            <!-- contenitore sx  -->
             <div id="col-sx">
-                <div id="navbar">
-
+                <div id="user_bar">
+                    <img class="foto_profilo_chat" src="img/io.png">
+                    <span class="nome">{{userName.name}}</span>
+                    <div class="icone_chat">    
+                        <i class="fas fa-circle-notch me-3"></i>    
+                        <i class="fas fa-comment-alt me-3" ></i>
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
                 </div>
                 <div id="notifiche">
                     <span class="bell_mute"><i class="fas fa-bell-slash"></i></span>
                     <span>Ricevi notifiche di nuovi messaggi</span>
                 </div>
-                <div class="chat_list" v-for="(elemento, index) in contacts" @click="selezionata(index)">
-                    <div class="d-inline-block">
-                        <img class="foto_profilo_chat" src="img/avatar_1.png">
-                    </div>
-                    <div class="nome_barra d-inline-block">
-                        <span>{{elemento.name}}</span>
+                <div class="chat_list">
+                    <div class="chat_singola" v-for="(elemento, index) in contacts" @click="selezionata(index)">
+                        <div class="float-start">
+                            <img class="foto_profilo_chat" :src="elemento.avatar">
+                        </div>
+                        <div class="nome_barra float-start">
+                            <div class="nome">{{elemento.name}}</div>
+                            <div class="messaggi_lista">{{contacts[index].messages.at(-1).text}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div v-for="(elemento, index) in contacts" :class="mostraChat(index)" id="chat">
-                <div class="barra_chat">
-                    <img class="foto_profilo_chat" src="img/avatar_1.png">
-                    <span>{{elemento.name}}</span>
-                    <span>
-                        <i class="fas fa-search"></i>
-                        <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                </div>
-                <div class="messaggi_chat">
-                    <div v-for="(elem, windex) in contacts[index].messages" :class="colonnaMessaggio(index, windex)">
-                        <div :class="tipoMessaggio(index, windex)">
-                            {{contacts[index].messages[windex].text}}
+            <!-- contenitore dx  -->
+            <div id="chat">
+                <div v-for="(elemento, index) in contacts" :class="mostraChat(index)" class="corpo_chat">
+                    <div class="barra_chat">
+                        <img class="foto_profilo_chat float-start" :src="elemento.avatar">
+                        <div class="attesa float-start">
+                            <div class="nome">{{elemento.name}}</div>
+                            <div class="messaggi_lista_attesa hidden">Sta scrivendo...</div>
                         </div>
-                    </div>    
+                        <div class="icone_chat float-end"> 
+                            <i class="fas fa-video me-3"></i>       
+                            <i class="fas fa-search me-3"></i>
+                            <i class="fas fa-ellipsis-v">
+                                <div class="dettagliChat hidden" @click="chiudiChat">chiudi</div>
+                            </i>
+                        </div>
+                    </div>
+                    <div class="messaggi_chat">
+                        <div v-for="(elem, windex) in contacts[index].messages" :class="colonnaMessaggio(index, windex)">
+                            <div :class="tipoMessaggio(index, windex)">
+                                {{contacts[index].messages[windex].text}}
+                                <div class="ora_messaggio">{{contacts[index].messages[windex].date}}</div>
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="barra_scrittura_messaggi">
+                        <div class="icone_scrittura_messaggi float-start">
+                            <i class="far fa-laugh me-3"></i> 
+                            <i class="fas fa-paperclip"></i>
+                        </div>                       
+                        <input class="scrittura_messaggi" type="text" placeholder="Scrivi un messaggio" v-model="nuovoMessaggio" @keyup.enter="newMessage(index)">                       
+                        <div class="icone_scrittura_messaggi float-end">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

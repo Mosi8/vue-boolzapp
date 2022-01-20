@@ -15,43 +15,74 @@ body{
     width: 35%;
     height: 100%;
     border-right: solid 1px rgb(230, 230, 230);
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 #chat {
     width: 65%;
     height: 100%;
+    position: relative;
+    top: 0;
+    left: 35%;
 }
 
-#navbar {
+.corpo_chat {
+    height: 100%;
+    position: relative;
+    top: 0;
+}
+
+#user_bar {
     width: 100%;
+    min-width: 300px;
     height: 70px;
     background-color: rgb(245, 245, 245);
+    overflow: hidden;
 }
 
 #notifiche {
     width: 100%;
+    min-width: 200px;
     height: 100px;
     background-color: rgb(142, 218, 254);
+    line-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .barra_chat {
-    width: 100%;
+    width: 65%;
     height: 70px;
     background-color: rgb(245, 245, 245);
     border-bottom: solid 1px rgb(230, 230, 230);
     line-height: 60px;
     position: fixed;
+    z-index: 200;
+    top: 0;
+    left: 35%;
+}
+
+.attesa {
+    height: 70px;
+    width: 50%;
+    line-height: 20px;
+    padding-top: 20px;
 }
 
 .bell_mute {
+    height: 70px;
+    width: 70px;
     border-radius: 50%;
     background-color: #fff;
     padding: 18px;
     font-size: 18px;
-    line-height: 100px;
-    vertical-align: middle;
     color: rgb(142, 218, 254);
     margin: 0 0 0 15px;
+    text-align: center;
+    line-height: 70px;
 }
 
 img {
@@ -63,16 +94,38 @@ img {
     height: 50px;
     border-radius: 50%;
     vertical-align: middle;
-    margin: 10px 20px;
+    margin: 10px 10px;
 }
 
 .nome_barra {
-    border-bottom: solid 1px rgb(230, 230, 230);
+    border-bottom: solid 1px rgb(245, 245, 245);
     height: 70px;
-    line-height: 70px;
+    width: calc(100% - 70px);
+    line-height: 25px;
+    padding: 8px 0 7px 0;
+}
+
+.nome {
+    font-weight: bold;
+}
+
+.messaggi_lista,
+.messaggi_attesa_lista {
+    font-size:12px;
+    height: 25px;
+    width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
 }
 
 .chat_list {
+    overflow: scroll;
+    min-height: 100px;
+    max-height: 100%;
+}
+
+.chat_singola {
     height: 70px;
 }
 
@@ -86,15 +139,15 @@ img {
 
 .messaggi_chat {
     background-image: url(img/bg-chat.png);
-    background-position: center;
-    height: calc(100% - 70px);
+    height: calc(100% - 130px);
     position: relative;
     top: 70px;
     padding: 10px;
+    overflow: scroll;
 }
 
 .ricevuto {
-    padding: 5px 8px;
+    padding: 2px 8px;
     font-size: 15px;
     border-radius: 5px;
     background-color: #fff;
@@ -104,7 +157,7 @@ img {
 }
 
 .inviato {
-    padding: 5px 8px;
+    padding: 2px 8px;
     font-size: 15px;
     border-radius: 5px;
     background-color: rgb(225, 247, 203);
@@ -112,3 +165,46 @@ img {
     max-width: 600px;
     margin: 0 20px 10px 20px;
 }
+
+.ora_messaggio {
+    font-size: 9px;
+    text-align: end;
+    margin-left: 10px;
+}
+
+.icone_chat {
+    float: right;
+    margin-right: 24px;
+    line-height: 70px;
+}
+/* barra per scrivere messaggi  */
+.barra_scrittura_messaggi {
+    width: 65%;
+    height: 60px;
+    background-color: rgb(245, 245, 245);
+    border-bottom: solid 1px rgb(230, 230, 230);
+    line-height: 50px;
+    position: fixed;
+    z-index: 500;
+    bottom: 0;
+    left: 35%;
+    vertical-align: middle;
+}
+
+.icone_scrittura_messaggi {
+    line-height: 60px;
+    font-size: 20px;
+    margin: 0 20px;
+    color: rgb(150, 150, 150);
+}
+
+.scrittura_messaggi {
+    border-radius: 25px;
+    border: none;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: bottom;
+    width: calc(100% - 153px);
+    padding: 0 20px;
+}
+/* fine barra per scrivere messaggi  */
