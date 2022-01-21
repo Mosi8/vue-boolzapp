@@ -26,8 +26,12 @@
                     <span class="bell_mute"><i class="fas fa-bell-slash"></i></span>
                     <span>Ricevi notifiche di nuovi messaggi</span>
                 </div>
+                <div class="barra_search">
+                    <span class="icona_search"><i class="fas fa-search"></i></span>
+                    <input type="text" class="input_search" v-model="filtro" @keyup="search" placeholder="Cerca o inizia una nuova chat">
+                </div>
                 <div class="chat_list">
-                    <div class="chat_singola" v-for="(elemento, index) in contacts" @click="selezionata(index)">
+                    <div class="chat_singola" v-for="(elemento, index) in contacts" :class="{'hidden': !elemento.visible}" @click="selezionata(index)">
                         <div class="float-start">
                             <img class="foto_profilo_chat" :src="elemento.avatar">
                         </div>
@@ -68,9 +72,10 @@
                             <i class="far fa-laugh me-3"></i> 
                             <i class="fas fa-paperclip"></i>
                         </div>                       
-                        <input class="scrittura_messaggi" type="text" placeholder="Scrivi un messaggio" v-model="nuovoMessaggio" @keyup.enter="newMessage(index)">                       
+                        <input class="scrittura_messaggi" type="text" placeholder="Scrivi un messaggio" v-model="nuovoMessaggio" @keyup.enter="newMessage(index)" @keyup="cambioIconaInvio">                      
                         <div class="icone_scrittura_messaggi float-end">
-                            <i class="fas fa-microphone"></i>
+                            <span :class='microfono'><i class="fas fa-microphone"></i></span>
+                            <span :class='invia' @click="newMessage(index)"><i class="fas fa-paper-plane"></i></span>
                         </div>
                     </div>
                 </div>

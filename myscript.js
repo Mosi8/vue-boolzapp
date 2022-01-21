@@ -5,6 +5,15 @@ let app = new Vue ({
             name : 'Maurizio',
             avatar : 'io'
         },
+        messaggi : [
+            'Ok!',
+            'Non ho capito',
+            'Mi dispiace, non so di cosa parli',
+            'Buona giornata'
+        ],
+        filtro : "",
+        invia : "hidden",
+        microfono : "active",
         nuovoMessaggio : "",
         chatVisualizzata : 0,
         contacts : [
@@ -126,30 +135,53 @@ let app = new Vue ({
         //     return info.className ='dettagliChat hidden'
         // },
         newMessage : function (indice) {
-            let newMess = {
+            const newMess = {
                 date : dayjs().format("HH:mm"),
                 text : this.nuovoMessaggio,
                 status : 'sent'
             }; 
             if(this.nuovoMessaggio != ""){
+                this.invia = 'active';
+                this.microfono = 'hidden'
                 this.contacts[indice].messages.push(newMess);
+                setTimeout(() => {
+                    this.newRisposta(indice)
+                }, 2000);
             }
             this.nuovoMessaggio = "";
-            setTimeout(() => {
-                this.contacts[indice].messages.push(
-                    {
-                        date : dayjs().format("HH:mm"),
-                        text : 'Ok',
-                        status : 'received'
-                    }
-                )
-            }, 2000);
-            setTimeout(() => {
-                let attesa = document.querySelectorAll('messaggi_lista_attesa');
-                attesa.classList.remove('hidden');
-            }, 2000);
-
+            this.invia = 'hidden';
+            this.microfono = "active"
+            
         },
+        newRisposta : function (indice) {
+            const newMess = {
+                date : dayjs().format("HH:mm"),
+                text : this.messaggi[this.getRandomInt()],
+                status : 'received'
+            }; 
+            this.contacts[indice].messages.push(newMess);
+        },
+        search : function(){
+            this.contacts.forEach((element) => {
+                element.visible = element.name.toLowerCase().includes(this.filtro.toLowerCase());
+            });
+        },
+        cambioIconaInvio : function () {
+            if(this.nuovoMessaggio != ""){
+                this.invia = 'active';
+                this.microfono = 'hidden'
+            }else{
+                this.invia = 'hidden';
+                this.microfono = 'active'
+            }
+        },
+        getRandomInt: function () {
+            return Math.floor(Math.random() * 4);
+        },
+    },
+    updated: function () {
+        let box = document.querySelector(".messaggi_chat");
+        box.scrollTop = box.scrollHeight;
     },
 }
 );
