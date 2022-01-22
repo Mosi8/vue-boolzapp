@@ -11,6 +11,14 @@ let app = new Vue ({
             'Mi dispiace, non so di cosa parli',
             'Buona giornata'
         ],
+        nuovoContatto : "",
+        linkImmagine : "",
+        newChat : "hidden",
+        info : "hidden",
+        accessoOra : "",
+        ultimoAccesso : "hidden",
+        online : "hidden",
+        attesa : "hidden",
         filtro : "",
         invia : "hidden",
         microfono : "active",
@@ -111,6 +119,9 @@ let app = new Vue ({
         },
         selezionata : function (indice){
             this.chatVisualizzata = indice;
+            this.nuovoMessaggio = "";
+            this.invia = 'hidden';
+            this.microfono = "active";
         },
         tipoMessaggio : function (indice, windex) {
             if(this.contacts[indice].messages[windex].status == 'received'){
@@ -127,13 +138,12 @@ let app = new Vue ({
         chiudiChat : function () {
             this.chatVisualizzata = null;
         },
-        // infoChat : function () {
-        //     let info = document.querySelectorAll('dettagliChat')
-        //     if(info.className = 'dettagliChat hidden'){
-        //         return info.className ='dettagliChat active'
-        //     }
-        //     return info.className ='dettagliChat hidden'
-        // },
+        infoChat : function () {
+            if(this.info == 'hidden'){
+                return this.info = 'active'
+            }
+            return this.info = 'hidden'
+        },
         newMessage : function (indice) {
             const newMess = {
                 date : dayjs().format("HH:mm"),
@@ -142,16 +152,26 @@ let app = new Vue ({
             }; 
             if(this.nuovoMessaggio != ""){
                 this.invia = 'active';
-                this.microfono = 'hidden'
+                this.microfono = 'hidden';
+                this.attesa = 'active';
+                this.ultimoAccesso = 'hidden';
                 this.contacts[indice].messages.push(newMess);
                 setTimeout(() => {
-                    this.newRisposta(indice)
-                }, 2000);
+                    this.newRisposta(indice);
+                    this.attesa = 'hidden';
+                    this.online = 'active';
+                }, 4000);
+                setTimeout(() => {
+                    this.online = 'hidden';
+                    this.ultimoAccesso = 'active';                   
+                }, 8000);
+                setTimeout(() => {
+                    this.accessoOra = dayjs().format("HH:mm")                   
+                }, 8001);
             }
             this.nuovoMessaggio = "";
             this.invia = 'hidden';
             this.microfono = "active"
-            
         },
         newRisposta : function (indice) {
             const newMess = {
@@ -177,6 +197,34 @@ let app = new Vue ({
         },
         getRandomInt: function () {
             return Math.floor(Math.random() * 4);
+        },
+        eliminaChat : function (indice) {
+            this.contacts.splice(indice,1);
+            this.chatVisualizzata = null;
+
+        },
+        eliminaMessaggi : function (indice) {
+            return this.contacts[indice].messages = [];
+        }, 
+        nuovaChat : function () {
+            if(this.newChat == 'hidden'){
+                return this.newChat = 'active'
+            }
+            return this.newChat = 'hidden'
+        },
+        newContact : function () {
+            const newCont = {
+                name : this.nuovoContatto,
+                avatar : this.linkImmagine,
+                visible : true,
+                messages : [],
+            };
+            if((this.nuovoContatto != "") && (this.linkImmagine != "")){
+                this.contacts.push(newCont)
+            }
+            this.nuovoContatto = ""
+            this.linkImmagine = ""
+            this.newChat = 'hidden'
         },
     },
     updated: function () {

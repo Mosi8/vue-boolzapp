@@ -18,7 +18,11 @@
                     <span class="nome">{{userName.name}}</span>
                     <div class="icone_chat">    
                         <i class="fas fa-circle-notch me-3"></i>    
-                        <i class="fas fa-comment-alt me-3" ></i>
+                        <i class="fas fa-comment-alt me-3"  @click="nuovaChat"></i>
+                        <div class="nuovoContatto" :class="newChat">
+                            <input type="text" placeholder="Nome contatto" v-model="nuovoContatto" class="inputNuovoMessaggio"> 
+                            <input type="text" placeholder="Link Immagine" v-model="linkImmagine" class="inputNuovoMessaggio" @keyup.enter="newContact">                   
+                        </div>
                         <i class="fas fa-ellipsis-v"></i>
                     </div>
                 </div>
@@ -37,25 +41,31 @@
                         </div>
                         <div class="nome_barra float-start">
                             <div class="nome">{{elemento.name}}</div>
-                            <div class="messaggi_lista">{{contacts[index].messages.at(-1).text}}</div>
+                            <div v-if="contacts[index].messages != 0" class="messaggi_lista">{{contacts[index].messages.at(-1).text}}</div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- contenitore dx  -->
-            <div id="chat">
-                <div v-for="(elemento, index) in contacts" :class="mostraChat(index)" class="corpo_chat">
+            <div v-for="(elemento, index) in contacts" id="chat" :class="mostraChat(index)">
+                <div class="corpo_chat">
                     <div class="barra_chat">
                         <img class="foto_profilo_chat float-start" :src="elemento.avatar">
                         <div class="attesa float-start">
                             <div class="nome">{{elemento.name}}</div>
-                            <div class="messaggi_lista_attesa hidden">Sta scrivendo...</div>
+                            <div class="messaggi_info" :class="attesa">Sta scrivendo...</div>
+                            <div class="messaggi_info" :class="online">online</div>
+                            <div class="messaggi_info" :class="ultimoAccesso">ultimo accesso alle {{accessoOra}}</div>
                         </div>
                         <div class="icone_chat float-end"> 
                             <i class="fas fa-video me-3"></i>       
                             <i class="fas fa-search me-3"></i>
-                            <i class="fas fa-ellipsis-v">
-                                <div class="dettagliChat hidden" @click="chiudiChat">chiudi</div>
+                            <i class="fas fa-ellipsis-v" @click="infoChat">
+                                <div class="modificaChat" :class="info">
+                                    <div @click="chiudiChat">Chiudi chat</div>
+                                    <div @click="eliminaMessaggi(index)">Elimina messaggi</div>
+                                    <div @click="eliminaChat(index)">Elimina chat</div>
+                                </div>
                             </i>
                         </div>
                     </div>
@@ -72,7 +82,7 @@
                             <i class="far fa-laugh me-3"></i> 
                             <i class="fas fa-paperclip"></i>
                         </div>                       
-                        <input class="scrittura_messaggi" type="text" placeholder="Scrivi un messaggio" v-model="nuovoMessaggio" @keyup.enter="newMessage(index)" @keyup="cambioIconaInvio">                      
+                        <input class="scrittura_messaggi" type="text" placeholder="Scrivi un messaggio" v-model="nuovoMessaggio" @keyup.enter="newMessage(index)" @keyup="cambioIconaInvio">                   
                         <div class="icone_scrittura_messaggi float-end">
                             <span :class='microfono'><i class="fas fa-microphone"></i></span>
                             <span :class='invia' @click="newMessage(index)"><i class="fas fa-paper-plane"></i></span>

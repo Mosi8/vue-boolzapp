@@ -118,6 +118,7 @@ img {
 .foto_profilo_chat {
     background-color: rgb(160, 100, 120);
     height: 50px;
+    width: 50px;
     border-radius: 50%;
     vertical-align: middle;
     margin: 10px 10px;
@@ -136,7 +137,7 @@ img {
 }
 
 .messaggi_lista,
-.messaggi_attesa_lista {
+.messaggi_info {
     font-size:12px;
     height: 25px;
     width: 80%;
@@ -202,6 +203,7 @@ img {
     float: right;
     margin-right: 24px;
     line-height: 70px;
+    cursor: pointer;
 }
 /* barra per scrivere messaggi  */
 .barra_scrittura_messaggi {
@@ -234,3 +236,38 @@ img {
     padding: 0 20px;
 }
 /* fine barra per scrivere messaggi  */
+
+.modificaChat {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: solid 1px rgb(230, 230, 230);
+    color: rgb(50, 50, 50);
+    background-color: rgb(245, 245, 245);
+    line-height: 25px;
+    font-size: 15px;
+    position: absolute;
+    top: 50px;
+    right: 20px;
+}
+/* nuova chat  */
+.nuovoContatto {
+    width: 200px;
+    padding: 10px 10px;
+    border-radius: 5px;
+    border: solid 1px rgb(230, 230, 230);
+    color: rgb(50, 50, 50);
+    background-color: rgb(245, 245, 245);
+    line-height: 25px;
+    font-size: 15px;
+    position: absolute;
+    top: 50px;
+    right: 40px;
+    z-index: 200;
+}
+
+.inputNuovoMessaggio {
+    width: 90%;
+    border-radius: 5px;
+    border: solid 1px rgb(230, 230, 230);
+    margin: 5px 10px;
+}
