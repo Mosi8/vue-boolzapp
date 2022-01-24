@@ -20,6 +20,7 @@
                         <i class="fas fa-circle-notch me-3"></i>    
                         <i class="fas fa-comment-alt me-3"  @click="nuovaChat"></i>
                         <div class="nuovoContatto" :class="newChat">
+                            <span>Nuova Chat</span>
                             <input type="text" placeholder="Nome contatto" v-model="nuovoContatto" class="inputNuovoMessaggio"> 
                             <input type="text" placeholder="Link Immagine" v-model="linkImmagine" class="inputNuovoMessaggio" @keyup.enter="newContact">                   
                         </div>
@@ -47,8 +48,8 @@
                 </div>
             </div>
             <!-- contenitore dx  -->
-            <div v-for="(elemento, index) in contacts" id="chat" :class="mostraChat(index)">
-                <div class="corpo_chat">
+            <div id="chat">
+                <div v-for="(elemento, index) in contacts" :class="mostraChat(index)" class="corpo_chat">
                     <div class="barra_chat">
                         <img class="foto_profilo_chat float-start" :src="elemento.avatar">
                         <div class="attesa float-start">
@@ -71,8 +72,14 @@
                     </div>
                     <div class="messaggi_chat">
                         <div v-for="(elem, windex) in contacts[index].messages" :class="colonnaMessaggio(index, windex)">
-                            <div :class="tipoMessaggio(index, windex)">
+                            <div class="messaggio_freccia float-start" :class="tipoMessaggio(index, windex)" @mouseleave="chiudiInfoMessaggio">
                                 {{contacts[index].messages[windex].text}}
+                                <i class="fas fa-chevron-down float-end" @click="infoMessaggio">
+                                    <div class="eliminaMess" :class="infoMess">
+                                        <div>Info</div>
+                                        <div @click="eliminaMessaggio(index, windex)">Elimina messaggio</div>
+                                    </div>
+                                </i>
                                 <div class="ora_messaggio">{{contacts[index].messages[windex].date}}</div>
                             </div>
                         </div>    

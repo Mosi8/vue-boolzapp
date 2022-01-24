@@ -14,6 +14,7 @@ let app = new Vue ({
         nuovoContatto : "",
         linkImmagine : "",
         newChat : "hidden",
+        infoMess : "hidden",
         info : "hidden",
         accessoOra : "",
         ultimoAccesso : "hidden",
@@ -23,7 +24,7 @@ let app = new Vue ({
         invia : "hidden",
         microfono : "active",
         nuovoMessaggio : "",
-        chatVisualizzata : 0,
+        chatVisualizzata : null,
         contacts : [
             {
                 name : 'Michele',
@@ -144,6 +145,15 @@ let app = new Vue ({
             }
             return this.info = 'hidden'
         },
+        infoMessaggio : function () {
+            if(this.infoMess == 'hidden'){
+                return this.infoMess = 'active'
+            }
+            return this.infoMess = 'hidden'
+        },
+        chiudiInfoMessaggio : function () {
+            return this.infoMess = 'hidden'
+        },
         newMessage : function (indice) {
             const newMess = {
                 date : dayjs().format("HH:mm"),
@@ -206,6 +216,9 @@ let app = new Vue ({
         eliminaMessaggi : function (indice) {
             return this.contacts[indice].messages = [];
         }, 
+        eliminaMessaggio : function (indice, windice) {
+            this.contacts[indice].messages.splice(windice,1);
+        },
         nuovaChat : function () {
             if(this.newChat == 'hidden'){
                 return this.newChat = 'active'

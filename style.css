@@ -171,6 +171,18 @@ img {
     top: 70px;
     padding: 10px;
     overflow: scroll;
+    word-wrap: break-word
+}
+
+.fas.fa-chevron-down.float-end  {
+    position: relative; 
+    top: 4px;
+    left: 2px;
+    display: none;
+}
+
+.messaggio_freccia:hover .fas.fa-chevron-down.float-end {
+  display: block;
 }
 
 .ricevuto {
@@ -270,4 +282,21 @@ img {
     border-radius: 5px;
     border: solid 1px rgb(230, 230, 230);
     margin: 5px 10px;
+}
+
+/* elimina un mess  */
+.eliminaMess {
+    width: 200px;
+    padding: 10px 10px;
+    border-radius: 5px;
+    border: solid 1px rgb(230, 230, 230);
+    color: rgb(50, 50, 50);
+    background-color: rgb(245, 245, 245);
+    line-height: 25px;
+    font-size: 15px;
+    position: absolute;
+    top: 30px;
+    right: 0px;
+    z-index: 200;
+    cursor: pointer;
 }
